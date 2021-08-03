@@ -1,12 +1,15 @@
 #雄獅旅遊/公司服務據點
 import requests
-import re,csv
+import re
+import csv
+
 
 class LionTravelStores(object):
   def __init__(self):
     self.base_url = 'https://info.liontravel.com/category/zh-tw/store/index'
     self.headers = {'User_Agent':'Mozilla/5.0'}
 
+    
   def LoadPage(self,url):
     res = requests.get(url,headers=self.headers)
     res.encoding = 'utf-8'
@@ -19,6 +22,7 @@ class LionTravelStores(object):
     C_list = pattern.findall(html)
     self.WrtDc(C_list)
 
+    
   def WrtDc(self,c_list):
     s = 0
     with open ('LionTravelStores.csv','a',newline='') as f :
@@ -30,9 +34,11 @@ class LionTravelStores(object):
       writer.writerow( ['\n'])
       writer.writerow( ['共',s,'個據點'] )
     
+    
   def Work(self):
     self.LoadPage(self.base_url)
     print('Done.')
+    
     
 if __name__ == '__main__':
   spyderman = LionTravelStores()
