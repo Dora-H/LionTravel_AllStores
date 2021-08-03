@@ -57,5 +57,5 @@ LionTravelStores
       writer.writerow( ['共',s,'個據點'] )
         
 #### 5. Finish:
-	# shows 'Done' to notify all the running is down.
+	# shows 'Done' to notify all the runnings are done.
     print('Done.')
