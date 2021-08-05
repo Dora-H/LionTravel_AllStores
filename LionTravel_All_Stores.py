@@ -1,4 +1,3 @@
-#雄獅旅遊/公司服務據點
 import requests
 import re
 import csv
