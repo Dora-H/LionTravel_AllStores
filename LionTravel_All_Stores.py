@@ -8,7 +8,7 @@ import pymysql
 import time
 
 
-class LionTravel(object):
+class LionTravelStores(object):
 	def __init__(self):
 		self.base_url = 'https://info.liontravel.com/category/zh-tw/store/index'
 		self.page = 1
@@ -24,13 +24,13 @@ class LionTravel(object):
 		print('Loaded the page. It is parsing...')
 		self.ParseContext(html)
 
-  def ParseContext(self,html):
+	  def ParseContext(self,html):
 		pattern = re.compile(r'''{"id":\d+,"name":"(.*?)","address":"(.*?)"''',re.S)
 		c_list = pattern.findall(html)
 		print('Parsed the page. It is writing and saving to mysql database...')
 		self.WrtToMysql(c_list)
     
-  def WrtToMysql(self,c_list):
+	  def WrtToMysql(self,c_list):
 		#filter warning
 		warnings.filterwarnings('ignore')
 		try:
@@ -42,7 +42,6 @@ class LionTravel(object):
 							Address varchar(50)) character set UTF8;')
 		except Warning:
 			pass
-
 		insert_sql = 'insert into LionTravelStores(StoreName,Address) values(%s,%s);'
 		for c_tuple in c_list:
 			StoreName = c_tuple[0].strip()
@@ -51,9 +50,8 @@ class LionTravel(object):
 			self.cur.execute(insert_sql,l)
 			self.db.commit()
 		print('It is written and saved to mysql database.')
-    
-    
-  def Work(self):
+
+	  def Work(self):
 	    self.LoadPage(self.base_url)
 	    print('Done.')
 	    self.cur.close()
